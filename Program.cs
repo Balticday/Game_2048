@@ -1,0 +1,48 @@
+﻿using System;
+
+namespace Day9_temp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Board newGame = new Board();
+
+            int iterationCounter = 1;
+
+            do // because we have to print the board at least once
+            {
+                Console.WriteLine($"____________________________Iteration No {iterationCounter}");        // just for me ;) 
+                iterationCounter++;
+                Console.WriteLine();
+
+                Console.WriteLine("New numbers!");                           // just for seeing that new numbers/number appear
+                newGame.newNumbers();                                        // method create a new number 
+                newGame.newNumbers();                                        // method create the second number 
+                newGame.PrintBoard();                                        // and print board with new numbers
+                Console.WriteLine();
+
+                Console.Write("For new move please press arrow: ");
+                Console.WriteLine("4 - left...");                            // Here must be a method (ConsoleKey.RightArrow etc.)?
+
+                switch (Console.ReadKey(false).Key)
+                {
+                    //case ConsoleKey.RightArrow:
+                    //    newGame.Right();
+                    //    break;
+                    case ConsoleKey.LeftArrow:
+                        newGame.newMove();
+                        break;
+                        //case ConsoleKey.UpArrow:
+                        //    newGame.Up();
+                        //    break;
+                        //case ConsoleKey.DownArrow:
+                        //    newGame.Down();
+                        //    break;
+
+                }
+
+            } while (true);                                                  // "true" is temporary solution
+        }
+    }
+}
