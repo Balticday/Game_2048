@@ -32,7 +32,7 @@ namespace Day9_temp
         static BoardEnum[] TempArray { get; set; } = { BoardEnum.empty, BoardEnum.empty, BoardEnum.empty, BoardEnum.empty }; // temporary array
         public void PrintBoard()
         {
-            Console.Clear();
+            //Console.Clear();
             Console.WriteLine();
 
             for (Row = 0; Row < newBoard.GetLength(0); Row++)                       // check row - 0, then row - 1 etc.
@@ -132,7 +132,7 @@ namespace Day9_temp
             {
                 IndexForTempArray = 0;
 
-                for (Column = 0; Column < newBoard.GetLength(1); Column++)    // check row - 0 column - 0, then row - 0 column - 1 etc.
+                for (Column = newBoard.GetLength(1)-1; Column >= 0; Column--)    // check row - 0 column - 0, then row - 0 column - 1 etc.
                 {                                                             // 
                     if (newBoard[row, Column] != BoardEnum.empty)             // if spot not empty             
                     {                                                         //
@@ -142,7 +142,7 @@ namespace Day9_temp
                 }
                 CheckTempArray(TempArray);
 
-                for (Column = 0; Column < newBoard.GetLength(1); Column++)    // to move values from temp array to board
+                for (Column = newBoard.GetLength(1)-1; Column >= 0; Column--)    // to move values from temp array to board
                 {
                     newBoard[row, Column] = TempArray[Column];
                     TempArray[Column] = BoardEnum.empty;
@@ -154,18 +154,15 @@ namespace Day9_temp
 
         private BoardEnum[] CheckTempArray(BoardEnum[] tempArray)
         {
-
-            for (int i = 0; i < TempArray.Length-1; i++)
-            {
-                for (int j = 1; j < TempArray.Length; j++)                    // chech each value in the temp array from 1 (not 0) to the last
-                {                                                             // 
-                    if (TempArray[j] == TempArray[j - 1])                     // if value is equal to the previous (for example index1 = index0)
-                    {                                                         //  
-                        TempArray[j - 1] = DoubleNumber(TempArray[j]);        // then to double the previous (index0)
-                        TempArray[j] = BoardEnum.empty;                       // and to assign empty to index1 
-                    }
-                } 
+            for (int j = 1; j < TempArray.Length; j++)                    // chech each value in the temp array from 1 (not 0) to the last
+            {                                                             // 
+                if (TempArray[j] == TempArray[j - 1])                     // if value is equal to the previous (for example index1 = index0)
+                {                                                         //  
+                    TempArray[j - 1] = DoubleNumber(TempArray[j]);        // then to double the previous (index0)
+                    TempArray[j] = BoardEnum.empty;                       // and to assign empty to index1 
+                }
             }
+            
             return tempArray;
         }
 
