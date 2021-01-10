@@ -132,7 +132,7 @@ namespace Day9_temp
             {
                 IndexForTempArray = 0;
 
-                for (Column = newBoard.GetLength(1)-1; Column >= 0; Column--)    // check row - 0 column - 0, then row - 0 column - 1 etc.
+                for (Column = newBoard.GetLength(1)-1; Column >= 0; Column--) // check row - 0 column - 3, then row - 0 column - 2 etc.
                 {                                                             // 
                     if (newBoard[row, Column] != BoardEnum.empty)             // if spot not empty             
                     {                                                         //
@@ -142,9 +142,12 @@ namespace Day9_temp
                 }
                 CheckTempArray(TempArray);
 
+                IndexForTempArray = 0;
+
                 for (Column = newBoard.GetLength(1)-1; Column >= 0; Column--)    // to move values from temp array to board
                 {
-                    newBoard[row, Column] = TempArray[Column];
+                    newBoard[row, Column] = TempArray[IndexForTempArray];
+                    IndexForTempArray += 1;
                     TempArray[Column] = BoardEnum.empty;
                 }
             }
