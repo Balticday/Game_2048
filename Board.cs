@@ -101,7 +101,7 @@ namespace Day9_temp
                 }
             }
         }
-        public void newMove()
+        public void newMoveLeft()
         {
             for (int row = 0; row < newBoard.GetLength(0); row++)             // check row - 0, then row - 1 etc.
             {
@@ -160,9 +160,16 @@ namespace Day9_temp
                 {                                                         //  
                     TempArray[j - 1] = DoubleNumber(TempArray[j]);        // then to double the previous (index0)
                     TempArray[j] = BoardEnum.empty;                       // and to assign empty to index1 
+                    if (j+1 <= TempArray.Length-1)
+                    {
+                        TempArray[j] = TempArray[j + 1];
+                    }
+                    if (j + 2 <= TempArray.Length-1)
+                    {
+                        TempArray[j+1] = TempArray[j + 2];
+                    }
                 }
             }
-            
             return tempArray;
         }
 

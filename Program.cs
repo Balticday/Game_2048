@@ -27,11 +27,11 @@ namespace Day9_temp
 
                 switch (Console.ReadKey(false).Key)
                 {
-                    //case ConsoleKey.RightArrow:
-                    //    newGame.Right();
-                    //    break;
+                    case ConsoleKey.RightArrow:
+                        newGame.newMoveRight();
+                        break;
                     case ConsoleKey.LeftArrow:
-                        newGame.newMove();
+                        newGame.newMoveLeft();
                         break;
                         //case ConsoleKey.UpArrow:
                         //    newGame.Up();
