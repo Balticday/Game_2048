@@ -104,15 +104,15 @@ namespace Day9_temp
         }
         public void newMoveLeft()
         {
-            for (int row = 0; row < newBoard.GetLength(0); row++)             // check row - 0, then row - 1 etc.
+            for (int Row = 0; Row < newBoard.GetLength(0); Row++)             // check row - 0, then row - 1 etc.
             {
                 IndexForTempArray = 0;
 
                 for (Column = 0; Column < newBoard.GetLength(1); Column++)    // check row - 0 column - 0, then row - 0 column - 1 etc.
                 {                                                             // 
-                    if (newBoard[row, Column] != BoardEnum.empty)             // if spot not empty             
+                    if (newBoard[Row, Column] != BoardEnum.empty)             // if spot not empty             
                     {                                                         //
-                        TempArray[IndexForTempArray] = newBoard[row, Column]; // than move this value to temp array
+                        TempArray[IndexForTempArray] = newBoard[Row, Column]; // than move this value to temp array
                         IndexForTempArray += 1;
                     }
                 }
@@ -120,7 +120,7 @@ namespace Day9_temp
 
                 for (Column = 0; Column < newBoard.GetLength(1); Column++)    // to move values from temp array to board
                 {
-                    newBoard[row, Column] = TempArray[Column];
+                    newBoard[Row, Column] = TempArray[Column];
                     TempArray[Column] = BoardEnum.empty;
                 }
             }
@@ -155,6 +155,31 @@ namespace Day9_temp
                 }
             }
             PrintBoard();                                                     // print the board for seeng new values
+            Console.WriteLine();
+        }
+        public void newMoveUp()
+        {
+            for (int Column = 0; Column < newBoard.GetLength(1); Column++)            
+            {
+                IndexForTempArray = 0;
+
+                for (Row = 0; Row < newBoard.GetLength(0); Row++)    
+                {                                                              
+                    if (newBoard[Row, Column] != BoardEnum.empty)                      
+                    {                                                         
+                        TempArray[IndexForTempArray] = newBoard[Row, Column]; 
+                        IndexForTempArray += 1;
+                    }
+                }
+                CheckTempArray(TempArray);
+
+                for (Row = 0; Row < newBoard.GetLength(0); Row++)
+                {
+                    newBoard[Row, Column] = TempArray[Row];
+                    TempArray[Column] = BoardEnum.empty;
+                }
+            }
+            PrintBoard();                                                     
             Console.WriteLine();
         }
 
