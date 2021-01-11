@@ -160,12 +160,13 @@ namespace Day9_temp
 
         private BoardEnum[] CheckTempArray(BoardEnum[] tempArray)
         {
-            if (TempArray[0] == TempArray[1])                     // if value is equal to the previous (for example index1 = index0)
+            if (TempArray[0] == TempArray[1])                     // for example index0 = index1 // 2 2 0 0
             {                                                           
-                TempArray[0] = DoubleNumber(TempArray[0]);        // then to double the previous (index0)
-                if (TempArray[2]== TempArray[3])
+                TempArray[0] = DoubleNumber(TempArray[0]);        // then to double index0
+
+                if (TempArray[2]== TempArray[3])                  // and index2 = index3 // 2 2 2 2 
                 {
-                    TempArray[1] = DoubleNumber(TempArray[2]);    // 2 2 2 2 
+                    TempArray[1] = DoubleNumber(TempArray[2]);    
                     TempArray[2] = BoardEnum.empty;
                     TempArray[3] = BoardEnum.empty;
                 }
@@ -175,14 +176,20 @@ namespace Day9_temp
                     TempArray[2] = TempArray[3];
                     TempArray[3] = BoardEnum.empty;
                 }
+                return tempArray;
             }
-            else if (TempArray[1] == TempArray[2])
+            else if (TempArray[1] == TempArray[2])                  // 2 4 4 2
             {
-
+                TempArray[1] = DoubleNumber(TempArray[1]);
+                TempArray[2] = TempArray[3];
+                TempArray[3] = BoardEnum.empty;
+                return tempArray;
             }
-            else if (TempArray[2] == TempArray[3])
+            else if (TempArray[2] == TempArray[3])                  // 2 4 2 2
             {
-
+                TempArray[2] = DoubleNumber(TempArray[2]);
+                TempArray[3] = BoardEnum.empty;
+                return tempArray;
             }
             return tempArray;
         }
