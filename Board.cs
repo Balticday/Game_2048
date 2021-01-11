@@ -30,9 +30,10 @@ namespace Day9_temp
         static int Column { get; set; }                           // variable for column index
         static int IndexForTempArray { get; set; }                // variable for temporary array index
         static BoardEnum[] TempArray { get; set; } = { BoardEnum.empty, BoardEnum.empty, BoardEnum.empty, BoardEnum.empty }; // temporary array
+        
         public void PrintBoard()
         {
-            //Console.Clear();
+            // Console.Clear();
             Console.WriteLine();
 
             for (Row = 0; Row < newBoard.GetLength(0); Row++)                       // check row - 0, then row - 1 etc.
@@ -130,10 +131,12 @@ namespace Day9_temp
         {
             for (int row = 0; row < newBoard.GetLength(0); row++)             // check row - 0, then row - 1 etc.
             {
+                int x = row;
                 IndexForTempArray = 0;
 
-                for (Column = newBoard.GetLength(1)-1; Column >= 0; Column--) // check row - 0 column - 3, then row - 0 column - 2 etc.
+                for (Column = (newBoard.GetLength(1)-1); Column > 0; Column--) // check row - 0 column - 3, then row - 0 column - 2 etc.
                 {                                                             // 
+                    int y = Column;
                     if (newBoard[row, Column] != BoardEnum.empty)             // if spot not empty             
                     {                                                         //
                         TempArray[IndexForTempArray] = newBoard[row, Column]; // than move this value to temp array
@@ -144,7 +147,7 @@ namespace Day9_temp
 
                 IndexForTempArray = 0;
 
-                for (Column = newBoard.GetLength(1)-1; Column >= 0; Column--)    // to move values from temp array to board
+                for (Column = newBoard.GetLength(1)-1; Column > 0; Column--)    // to move values from temp array to board
                 {
                     newBoard[row, Column] = TempArray[IndexForTempArray];
                     IndexForTempArray += 1;
@@ -157,21 +160,29 @@ namespace Day9_temp
 
         private BoardEnum[] CheckTempArray(BoardEnum[] tempArray)
         {
-            for (int j = 1; j < TempArray.Length; j++)                    // chech each value in the temp array from 1 (not 0) to the last
-            {                                                             // 
-                if (TempArray[j] == TempArray[j - 1])                     // if value is equal to the previous (for example index1 = index0)
-                {                                                         //  
-                    TempArray[j - 1] = DoubleNumber(TempArray[j]);        // then to double the previous (index0)
-                    TempArray[j] = BoardEnum.empty;                       // and to assign empty to index1 
-                    if (j+1 <= TempArray.Length-1)
-                    {
-                        TempArray[j] = TempArray[j + 1];
-                    }
-                    if (j + 2 <= TempArray.Length-1)
-                    {
-                        TempArray[j+1] = TempArray[j + 2];
-                    }
+            if (TempArray[0] == TempArray[1])                     // if value is equal to the previous (for example index1 = index0)
+            {                                                           
+                TempArray[0] = DoubleNumber(TempArray[0]);        // then to double the previous (index0)
+                if (TempArray[2]== TempArray[3])
+                {
+                    TempArray[1] = DoubleNumber(TempArray[2]);    // 2 2 2 2 
+                    TempArray[2] = BoardEnum.empty;
+                    TempArray[3] = BoardEnum.empty;
                 }
+                else
+                {
+                    TempArray[1] = TempArray[2];
+                    TempArray[2] = TempArray[3];
+                    TempArray[3] = BoardEnum.empty;
+                }
+            }
+            else if (TempArray[1] == TempArray[2])
+            {
+
+            }
+            else if (TempArray[2] == TempArray[3])
+            {
+
             }
             return tempArray;
         }

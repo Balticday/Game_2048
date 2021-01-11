@@ -23,7 +23,6 @@ namespace Day9_temp
                 Console.WriteLine();
 
                 Console.Write("For new move please press arrow: ");
-                Console.WriteLine("4 - left...");                            // Here must be a method (ConsoleKey.RightArrow etc.)?
 
                 switch (Console.ReadKey(false).Key)
                 {
