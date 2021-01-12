@@ -30,10 +30,11 @@ namespace Day9_temp
         static int Column { get; set; }                           // variable for column index
         static int IndexForTempArray { get; set; }                // variable for temporary array index
         static BoardEnum[] TempArray { get; set; } = { BoardEnum.empty, BoardEnum.empty, BoardEnum.empty, BoardEnum.empty }; // temporary array
-        
+        public int Score { get; set; }
+
         public void PrintBoard()
         {
-            // Console.Clear();
+            Console.Clear();
             Console.WriteLine();
 
             for (Row = 0; Row < newBoard.GetLength(0); Row++)                       // check row - 0, then row - 1 etc.
@@ -44,37 +45,51 @@ namespace Day9_temp
                     {
                         case BoardEnum.empty:
                             Console.ForegroundColor = ConsoleColor.Yellow;          // if spot's value is 0, print " _" 
-                            Console.Write("   _");
+                            Console.Write("    _");
                             break;
                         case BoardEnum.number_2:
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("   2");
+                            Console.Write("    2");
                             break;
                         case BoardEnum.number_4:
                             Console.ForegroundColor = ConsoleColor.Blue;
-                            Console.Write("   4");
+                            Console.Write("    4");
                             break;
                         case BoardEnum.number_8:
                             Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write("   8");
+                            Console.Write("    8");
                             break;
                         case BoardEnum.number_16:
                             Console.ForegroundColor = ConsoleColor.Magenta;
-                            Console.Write("  16");
+                            Console.Write("   16");
                             break;
                         case BoardEnum.number_32:
+                            Console.ForegroundColor = ConsoleColor.DarkBlue;
+                            Console.Write("   32");
                             break;
                         case BoardEnum.number_64:
+                            Console.ForegroundColor = ConsoleColor.DarkBlue;
+                            Console.Write("   64");
                             break;
                         case BoardEnum.number_128:
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write("  128");
                             break;
                         case BoardEnum.number_256:
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write("  256");
                             break;
                         case BoardEnum.number_512:
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write("  512");
                             break;
                         case BoardEnum.number_1024:
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write(" 1024");
                             break;
                         case BoardEnum.number_2048:
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write(" 2048");
                             break;
                     }
                 }
@@ -129,17 +144,15 @@ namespace Day9_temp
         }
         public void newMoveRight()
         {
-            for (int row = 0; row < newBoard.GetLength(0); row++)             // check row - 0, then row - 1 etc.
+            for (int row = 0; row < newBoard.GetLength(0); row++)            
             {
-                int x = row;
                 IndexForTempArray = 0;
 
-                for (Column = (newBoard.GetLength(1)-1); Column > 0; Column--) // check row - 0 column - 3, then row - 0 column - 2 etc.
-                {                                                             // 
-                    int y = Column;
-                    if (newBoard[row, Column] != BoardEnum.empty)             // if spot not empty             
-                    {                                                         //
-                        TempArray[IndexForTempArray] = newBoard[row, Column]; // than move this value to temp array
+                for (Column = newBoard.GetLength(1)-1; Column >= 0; Column--) 
+                {                                                              
+                    if (newBoard[row, Column] != BoardEnum.empty)                      
+                    {                                                         
+                        TempArray[IndexForTempArray] = newBoard[row, Column]; 
                         IndexForTempArray += 1;
                     }
                 }
@@ -147,11 +160,11 @@ namespace Day9_temp
 
                 IndexForTempArray = 0;
 
-                for (Column = newBoard.GetLength(1)-1; Column > 0; Column--)    // to move values from temp array to board
+                for (Column = newBoard.GetLength(1)-1; Column >= 0; Column--)
                 {
                     newBoard[row, Column] = TempArray[IndexForTempArray];
+                    TempArray[IndexForTempArray] = BoardEnum.empty;
                     IndexForTempArray += 1;
-                    TempArray[Column] = BoardEnum.empty;
                 }
             }
             PrintBoard();                                                     // print the board for seeng new values
@@ -176,10 +189,38 @@ namespace Day9_temp
                 for (Row = 0; Row < newBoard.GetLength(0); Row++)
                 {
                     newBoard[Row, Column] = TempArray[Row];
-                    TempArray[Column] = BoardEnum.empty;
+                    TempArray[Row] = BoardEnum.empty;
                 }
             }
             PrintBoard();                                                     
+            Console.WriteLine();
+        }
+        public void newMoveDown()
+        {
+            for (int Column = 0; Column < newBoard.GetLength(1); Column++)
+            {
+                IndexForTempArray = 0;
+
+                for (Row = (newBoard.GetLength(0) - 1); Row >=0; Row--)
+                {
+                    if (newBoard[Row, Column] != BoardEnum.empty)
+                    {
+                        TempArray[IndexForTempArray] = newBoard[Row, Column];
+                        IndexForTempArray += 1;
+                    }
+                }
+                CheckTempArray(TempArray);
+                
+                IndexForTempArray = 0;
+
+                for (Row = (newBoard.GetLength(0) - 1); Row >= 0; Row--)
+                {
+                    newBoard[Row, Column] = TempArray[IndexForTempArray];
+                    TempArray[IndexForTempArray] = BoardEnum.empty;
+                    IndexForTempArray++;
+                }
+            }
+            PrintBoard();
             Console.WriteLine();
         }
 
@@ -218,7 +259,6 @@ namespace Day9_temp
             }
             return tempArray;
         }
-
         private BoardEnum DoubleNumber(BoardEnum boardEnum)
         {
             switch (boardEnum)
@@ -226,6 +266,7 @@ namespace Day9_temp
                 case BoardEnum.empty:
                     return BoardEnum.empty;
                 case BoardEnum.number_2:
+                    Score += 4;
                     return BoardEnum.number_4;
                 case BoardEnum.number_4:
                     return BoardEnum.number_8;

@@ -7,7 +7,7 @@ namespace Day9_temp
         static void Main(string[] args)
         {
             Board newGame = new Board();
-
+            bool gameIsFinished = false;
             int iterationCounter = 1;
 
             do // because we have to print the board at least once
@@ -20,28 +20,31 @@ namespace Day9_temp
                 newGame.newNumbers();                                        // method create a new number 
                 newGame.newNumbers();                                        // method create the second number 
                 newGame.PrintBoard();                                        // and print board with new numbers
+                Console.WriteLine(newGame.Score);
                 Console.WriteLine();
 
                 Console.Write("For new move please press arrow: ");
 
                 switch (Console.ReadKey(false).Key)
                 {
-                    //case ConsoleKey.RightArrow:
-                    //    newGame.newMoveRight();
-                    //    break;
+                    case ConsoleKey.RightArrow:
+                        newGame.newMoveRight();
+                        break;
                     case ConsoleKey.LeftArrow:
                         newGame.newMoveLeft();
                         break;
                     case ConsoleKey.UpArrow:
                         newGame.newMoveUp();
                         break;
-                        //case ConsoleKey.DownArrow:
-                        //    newGame.newMoveDown();
-                        //    break;
-
+                    case ConsoleKey.DownArrow:
+                        newGame.newMoveDown();
+                        break;
+                    default:
+                        gameIsFinished = true;
+                        break;
                 }
 
-            } while (true);                                                  // "true" is temporary solution
+            } while (!gameIsFinished);                                                  // "true" is temporary solution
         }
     }
 }
