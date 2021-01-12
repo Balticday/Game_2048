@@ -20,7 +20,7 @@ namespace Day9_temp
                 newGame.newNumbers();                                        // method create a new number 
                 newGame.newNumbers();                                        // method create the second number 
                 newGame.PrintBoard();                                        // and print board with new numbers
-                Console.WriteLine(newGame.Score);
+                Console.WriteLine($"Score: {newGame.Score}");
                 Console.WriteLine();
 
                 Console.Write("For new move please press arrow: ");
