@@ -44,52 +44,53 @@ namespace Day9_temp
                     switch (newBoard[Row, Column])
                     {
                         case BoardEnum.empty:
-                            Console.ForegroundColor = ConsoleColor.Yellow;          // if spot's value is 0, print " _" 
-                            Console.Write("    _");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            // if spot's value is 0, print " _" 
+                            Console.Write("|_____|");
                             break;
                         case BoardEnum.number_2:
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("    2");
+                            Console.Write("|__2__|");
                             break;
                         case BoardEnum.number_4:
                             Console.ForegroundColor = ConsoleColor.Blue;
-                            Console.Write("    4");
+                            Console.Write("|__4__|");
                             break;
                         case BoardEnum.number_8:
                             Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write("    8");
+                            Console.Write("|__8__|");
                             break;
                         case BoardEnum.number_16:
                             Console.ForegroundColor = ConsoleColor.Magenta;
-                            Console.Write("   16");
+                            Console.Write("|__16_|");
                             break;
                         case BoardEnum.number_32:
                             Console.ForegroundColor = ConsoleColor.DarkBlue;
-                            Console.Write("   32");
+                            Console.Write("|__32_|");
                             break;
                         case BoardEnum.number_64:
                             Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.Write("   64");
+                            Console.Write("|__64_|");
                             break;
                         case BoardEnum.number_128:
                             Console.ForegroundColor = ConsoleColor.Gray;
-                            Console.Write("  128");
+                            Console.Write("|_128_|");
                             break;
                         case BoardEnum.number_256:
                             Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                            Console.Write("  256");
+                            Console.Write("|_256_|");
                             break;
                         case BoardEnum.number_512:
                             Console.ForegroundColor = ConsoleColor.DarkRed;
-                            Console.Write("  512");
+                            Console.Write("|_512_|");
                             break;
                         case BoardEnum.number_1024:
                             Console.ForegroundColor = ConsoleColor.White;
-                            Console.Write(" 1024");
+                            Console.Write("| 1024|");
                             break;
                         case BoardEnum.number_2048:
                             Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            Console.Write(" 2048");
+                            Console.Write("| 2048|");
                             break;
                     }
                 }

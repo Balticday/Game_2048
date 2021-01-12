@@ -8,17 +8,16 @@ namespace Day9_temp
         {
             Board newGame = new Board();
             bool gameIsFinished = false;
-            int iterationCounter = 1;
+
+            newGame.newNumbers();                                            // method create a new number 
 
             do // because we have to print the board at least once
             {
-                Console.WriteLine($"____________________________Iteration No {iterationCounter}");        // just for me ;) 
-                iterationCounter++;
                 Console.WriteLine();
 
                 Console.WriteLine("New numbers!");                           // just for seeing that new numbers/number appear
                 newGame.newNumbers();                                        // method create a new number 
-                newGame.newNumbers();                                        // method create the second number 
+                newGame.newNumbers();                                        // method create a new number 
                 newGame.PrintBoard();                                        // and print board with new numbers
                 Console.WriteLine($"Score: {newGame.Score}");
                 Console.WriteLine();
