@@ -17,7 +17,6 @@ namespace Day9_temp
 
                 Console.WriteLine("New numbers!");                           // just for seeing that new numbers/number appear
                 newGame.newNumbers();                                        // method create a new number 
-                newGame.newNumbers();                                        // method create a new number 
                 newGame.PrintBoard();                                        // and print board with new numbers
                 Console.WriteLine($"Score: {newGame.Score}");
                 Console.WriteLine();
