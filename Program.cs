@@ -41,7 +41,6 @@ namespace Day9_temp
                         gameIsFinished = true;
                         break;
                 }
-
             } while (!gameIsFinished);                                                  // "true" is temporary solution
         }
     }
