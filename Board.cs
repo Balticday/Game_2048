@@ -31,8 +31,9 @@ namespace Day9_temp
         static int IndexForTempArray { get; set; }                // variable for temporary array index
         static BoardEnum[] TempArray { get; set; } = { BoardEnum.empty, BoardEnum.empty, BoardEnum.empty, BoardEnum.empty }; // temporary array
         public int Score { get; set; }
+        public bool KeyPressed { get; set; } = false;
 
-        public void newNumbers()
+        public void NewNumbers()
         {
             Success = false;
 
@@ -66,7 +67,7 @@ namespace Day9_temp
 
             for (Row = 0; Row < newBoard.GetLength(0); Row++)                       // check row - 0, then row - 1 etc.
             {
-                Console.WriteLine(); //!!!
+                Console.WriteLine(); 
                 for (Column = 0; Column < newBoard.GetLength(1); Column++)          // check row - 0 column - 0, then row - 0 column - 1 etc.
                 {
                     switch (newBoard[Row, Column])
@@ -155,6 +156,7 @@ namespace Day9_temp
             }
             PrintBoard();                                                     // print the board for seeng new values
             Console.WriteLine();
+            KeyPressed = true;
         }
 
         public void newMoveLeft()
@@ -181,6 +183,7 @@ namespace Day9_temp
             }
             PrintBoard();                                                     // print the board for seeng new values
             Console.WriteLine();
+            KeyPressed = true;
         }
 
         public void newMoveUp()
@@ -207,6 +210,7 @@ namespace Day9_temp
             }
             PrintBoard();
             Console.WriteLine();
+            KeyPressed = true;
         }
 
         public void newMoveDown()
@@ -236,6 +240,7 @@ namespace Day9_temp
             }
             PrintBoard();
             Console.WriteLine();
+            KeyPressed = true;
         }
 
         private BoardEnum[] CheckTempArray(BoardEnum[] tempArray)
