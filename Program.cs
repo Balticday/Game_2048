@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Day9_temp
+namespace Game_2048_KAN_version
 {
     class Program
     {
@@ -9,69 +9,11 @@ namespace Day9_temp
         {
             Game newGame = new Game();
 
+            #region Name of the game and rules
             PrintInYellow(@"                WELCOME TO THE GAME ""KAN 2048!""");
             PrintInYellow("                      / version 1.105 /");
             PrintInYellow("-----------------------------------------------------------------");
-            Welcome();
-
-            newGame.NewNumbers();                                            // method create a new number 
-
-            do                                                               // because we have to print the board at least once
-            {
-                newGame.NewNumbers();                                        // method create a new number 
-                newGame.PrintBoard();                                        // and print board with new numbers
-
-                Console.WriteLine(); 
-                Console.Write("                   "); 
-                PrintInBlack($" SCORE: {newGame.Score}   ");
-                Console.WriteLine();
-                PrintInYellow("            For new move press arrow: ");
-
-                #region Arrow pressing
-                newGame.KeyPressed = false;
-                while (!newGame.KeyPressed)
-                {
-                    switch (Console.ReadKey(false).Key)
-                    {
-                        case ConsoleKey.RightArrow:
-                            newGame.NewMoveRight();
-                            break;
-                        case ConsoleKey.LeftArrow:
-                            newGame.NewMoveLeft();
-                            break;
-                        case ConsoleKey.UpArrow:
-                            newGame.NewMoveUp();
-                            break;
-                        case ConsoleKey.DownArrow:
-                            newGame.NewMoveDown();
-                            break;
-                        default:
-                            Console.WriteLine();
-                            PrintInRed("ERROR! Please press an ARROW key.");
-                            break;
-                    } 
-                }
-                #endregion Arrow pressing
-
-            } while (!newGame.GameIsFinished);                                // "true" is temporary solution
-
-            PrintInYellow(newGame.IsWon == true ? "Congratulations! You won!" : $"GAME OVER! Thank you for playing! Your SCORE is {newGame.Score}");
-
-            Console.WriteLine();
-            PrintInYellow("Press ESCAPE to close game:");
-            //Console.ReadKey();
-            while (Console.ReadKey().Key != ConsoleKey.Escape)
-            {
-                if (Console.ReadKey().Key == ConsoleKey.Escape)
-                {
-                    Environment.Exit(0);
-                }
-            }
-        }
-
-        #region Name of the game and rules
-        static string Welcome()
-        {
+            // Welcome();
             PrintInYellow("        Press ANY key to continue OR 'ENTER' to SKIP the rules:");
             while (Console.ReadKey().Key != ConsoleKey.Enter)
             {
@@ -94,21 +36,42 @@ namespace Day9_temp
                 Console.WriteLine();
                 PrintInYellow("              Press any key for the game to start:");
                 Console.ReadKey();
-                return "";
             }
-            return "";
+            #endregion Name of the game and rules
+
+            newGame.NewNumbers();                                            // method create a new number 
+            
+            do                                                               // because we have to print the board at least once
+            {
+                newGame.NewNumbers();                                        // method create a new number 
+                newGame.PrintBoard();                                        // and print board with new numbers
+
+                #region Info below board about score and key for move
+                Console.WriteLine();
+                Console.Write("                   ");
+                PrintInBlack($" SCORE: {newGame.Score}   ");
+                Console.WriteLine();
+                PrintInYellow("            For new move press arrow: ");
+                #endregion Info below board about score and key for move
+
+                #region Arrow pressing
+                while (!newGame.PressArrow())
+                {
+                    PrintInRed("ERROR! Please press an ARROW key.");
+                }
+                #endregion Arrow pressing
+
+            } while (!newGame.GameIsFinished);                                // "true" is temporary solution
+
+            PrintInYellow(newGame.IsWon == true ? "Congratulations! YOU WON! Your SCORE is {newGame.Score}" :
+                                                 $"GAME OVER! Thank you for playing! Your SCORE is {newGame.Score}");
+
+            #region Info about exit
+            Console.WriteLine();
+            PrintInYellow("Press ESCAPE to close game:");
+            newGame.EscapeForExit();
+            #endregion Info about exit
         }
-        #endregion Name of the game and rules
-
-        //private static void Congratulations()
-        //{
-        //    Console.WriteLine("Congratulations! You won! ");
-        //}
-        //private static void InfoAboutGameIsOver(int score)
-        //{
-        //    Console.WriteLine($"GAME OVER! Thank you for playing! Your SCORE is {score}");
-        //}
-
         #region Methods for printing colored text
         private static void PrintInRed(string text)
         {

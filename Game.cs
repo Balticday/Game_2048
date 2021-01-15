@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading;
 
-namespace Day9_temp
+namespace Game_2048_KAN_version
 {
     enum BoardEnum
     {
@@ -23,22 +22,19 @@ namespace Day9_temp
     }
     class Game
     {
-        public BoardEnum[,] NewBoard { get; set; } = new BoardEnum[4, 4];
-        public int Score { get; set; }
-
-        public bool GameIsFinished = false;
-        public bool IsWon = false;
-        public bool KeyPressed { get; set; } = false;             // variable for checking if it is time to break operation
-
-        static Random Rand { get; set; } = new Random();          // for getting new random value
+        public int Score { get; private set; }
+        public bool GameIsFinished { get; private set; } = false;
+        public bool IsWon { get; private set; } = false;
+        static BoardEnum[,] NewBoard { get; } = new BoardEnum[4, 4];
+        static Random Rand { get; } = new Random();          // for getting new random value
         static int Row { get; set; }                              // variable for row index
+        static bool KeyPressed { get; set; } = false;             // variable for checking if it is time to break operation
         static int Column { get; set; }                           // variable for column index
         static int IndexForTempArray { get; set; }                // variable for temporary array index
-        static BoardEnum[] TempArray { get; set; } = { BoardEnum.empty, BoardEnum.empty, BoardEnum.empty, BoardEnum.empty }; // temporary array
-        
+        static BoardEnum[] TempArray { get;} = { BoardEnum.empty, BoardEnum.empty, BoardEnum.empty, BoardEnum.empty }; // temporary array
         public void NewNumbers()
         {
-            bool success = false;                                 
+            bool success = false;
             int checkForEmptySpot = 0;
 
             while (!success)
@@ -47,7 +43,7 @@ namespace Day9_temp
                 {
                     for (Column = 0; Column < NewBoard.GetLength(1); Column++)
                     {
-                        if (NewBoard[Row, Column]==BoardEnum.empty)
+                        if (NewBoard[Row, Column] == BoardEnum.empty)
                         {
                             checkForEmptySpot++;
                         }
@@ -74,7 +70,7 @@ namespace Day9_temp
                     {
                         NewBoard[Row, Column] = BoardEnum.number_2;
                         success = true;
-                    } 
+                    }
                 }
                 else
                 {
@@ -87,30 +83,6 @@ namespace Day9_temp
                 }
             }
         }
-        private bool CheckPossibleMove()
-        {
-            // row1, check if col1 == col2 or col2 == col3 or col3 == col4
-            for (int Row = 0; Row < NewBoard.GetLength(0); Row++)
-            {
-                if (NewBoard[Row, 0] == NewBoard[Row, 1] ||
-                    NewBoard[Row, 1] == NewBoard[Row, 2] ||
-                    NewBoard[Row, 2] == NewBoard[Row, 3])
-                {
-                    return true;  
-                }
-            }
-            for (Column = 0; Column < NewBoard.GetLength(1); Column++)
-            {
-                if (NewBoard[0, Column] == NewBoard[1, Column] ||
-                    NewBoard[1, Column] == NewBoard[2, Column] ||
-                    NewBoard[2, Column] == NewBoard[3, Column])
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public void PrintBoard()
         {
             Console.Clear();
@@ -118,8 +90,8 @@ namespace Day9_temp
 
             for (Row = 0; Row < NewBoard.GetLength(0); Row++)                       // check row - 0, then row - 1 etc.
             {
-                Console.WriteLine(); 
-                Console.Write("           "); 
+                Console.WriteLine();
+                Console.Write("           ");
 
                 for (Column = 0; Column < NewBoard.GetLength(1); Column++)          // check row - 0 column - 0, then row - 0 column - 1 etc.
                 {
@@ -181,8 +153,43 @@ namespace Day9_temp
             }
             Console.ResetColor();
         }
-
-        public void NewMoveRight()
+        public bool PressArrow() 
+        {
+            KeyPressed = false;
+            while (!KeyPressed)
+            {
+                switch (Console.ReadKey(false).Key)
+                {
+                    case ConsoleKey.RightArrow:
+                        NewMoveRight();
+                        return true;
+                    case ConsoleKey.LeftArrow:
+                        NewMoveLeft();
+                        return true;
+                    case ConsoleKey.UpArrow:
+                        NewMoveUp();
+                        return true;
+                    case ConsoleKey.DownArrow:
+                        NewMoveDown();
+                        return true;
+                    default:
+                        Console.WriteLine();
+                        return false; 
+                }
+            }
+            return false;
+        }
+        public void EscapeForExit()
+        {
+            while (Console.ReadKey().Key != ConsoleKey.Escape)
+            {
+                if (Console.ReadKey().Key == ConsoleKey.Escape)
+                {
+                    Environment.Exit(0);
+                }
+            }
+        }
+        private void NewMoveRight()
         {
             for (int row = 0; row < NewBoard.GetLength(0); row++)
             {
@@ -211,8 +218,7 @@ namespace Day9_temp
             Console.WriteLine();
             KeyPressed = true;
         }
-
-        public void NewMoveLeft()
+        private void NewMoveLeft()
         {
             for (int Row = 0; Row < NewBoard.GetLength(0); Row++)             // check row - 0, then row - 1 etc.
             {
@@ -238,8 +244,7 @@ namespace Day9_temp
             Console.WriteLine();
             KeyPressed = true;
         }
-
-        public void NewMoveUp()
+        private void NewMoveUp()
         {
             for (int Column = 0; Column < NewBoard.GetLength(1); Column++)
             {
@@ -265,8 +270,7 @@ namespace Day9_temp
             Console.WriteLine();
             KeyPressed = true;
         }
-
-        public void NewMoveDown()
+        private void NewMoveDown()
         {
             for (int Column = 0; Column < NewBoard.GetLength(1); Column++)
             {
@@ -295,7 +299,29 @@ namespace Day9_temp
             Console.WriteLine();
             KeyPressed = true;
         }
-
+        private bool CheckPossibleMove()
+        {
+            // row1, check if col1 == col2 or col2 == col3 or col3 == col4
+            for (int Row = 0; Row < NewBoard.GetLength(0); Row++)
+            {
+                if (NewBoard[Row, 0] == NewBoard[Row, 1] ||
+                    NewBoard[Row, 1] == NewBoard[Row, 2] ||
+                    NewBoard[Row, 2] == NewBoard[Row, 3])
+                {
+                    return true;
+                }
+            }
+            for (Column = 0; Column < NewBoard.GetLength(1); Column++)
+            {
+                if (NewBoard[0, Column] == NewBoard[1, Column] ||
+                    NewBoard[1, Column] == NewBoard[2, Column] ||
+                    NewBoard[2, Column] == NewBoard[3, Column])
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         private BoardEnum[] CheckTempArray(BoardEnum[] tempArray)
         {
             if (TempArray[0] == TempArray[1])                     // for example index0 = index1 // 2 2 0 0
@@ -331,7 +357,6 @@ namespace Day9_temp
             }
             return tempArray;
         }
-
         private BoardEnum DoubleNumber(BoardEnum boardEnum)
         {
             switch (boardEnum)
