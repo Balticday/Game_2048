@@ -7,47 +7,43 @@ namespace Day9_temp
     {
         static void Main(string[] args)
         {
-            Board newGame = new Board();
-            bool gameIsFinished = false;
+            Game newGame = new Game();
 
             PrintInYellow(@"                WELCOME TO THE GAME ""KAN 2048!""");
             PrintInYellow("                      / version 1.105 /");
             PrintInYellow("-----------------------------------------------------------------");
-
             Welcome();
 
             newGame.NewNumbers();                                            // method create a new number 
 
-            do // because we have to print the board at least once
+            do                                                               // because we have to print the board at least once
             {
-                PrintInYellow($"GAME OVER! Thank you for playing! Your SCORE is {newGame.Score}");
-                Console.WriteLine();
-
                 newGame.NewNumbers();                                        // method create a new number 
                 newGame.PrintBoard();                                        // and print board with new numbers
 
                 Console.WriteLine(); 
-                PrintInBlack($"                SCORE: {newGame.Score}   ");
+                Console.Write("                   "); 
+                PrintInBlack($" SCORE: {newGame.Score}   ");
                 Console.WriteLine();
+                PrintInYellow("            For new move press arrow: ");
 
-                PrintInYellow("For new move press arrow: ");
-
+                #region Arrow pressing
                 newGame.KeyPressed = false;
                 while (!newGame.KeyPressed)
                 {
                     switch (Console.ReadKey(false).Key)
                     {
                         case ConsoleKey.RightArrow:
-                            newGame.newMoveRight();
+                            newGame.NewMoveRight();
                             break;
                         case ConsoleKey.LeftArrow:
-                            newGame.newMoveLeft();
+                            newGame.NewMoveLeft();
                             break;
                         case ConsoleKey.UpArrow:
-                            newGame.newMoveUp();
+                            newGame.NewMoveUp();
                             break;
                         case ConsoleKey.DownArrow:
-                            newGame.newMoveDown();
+                            newGame.NewMoveDown();
                             break;
                         default:
                             Console.WriteLine();
@@ -55,35 +51,65 @@ namespace Day9_temp
                             break;
                     } 
                 }
-            } while (!gameIsFinished);                                                  // "true" is temporary solution
+                #endregion Arrow pressing
+
+            } while (!newGame.GameIsFinished);                                // "true" is temporary solution
+
+            PrintInYellow(newGame.IsWon == true ? "Congratulations! You won!" : $"GAME OVER! Thank you for playing! Your SCORE is {newGame.Score}");
+
+            Console.WriteLine();
+            PrintInYellow("Press ESCAPE to close game:");
+            //Console.ReadKey();
+            while (Console.ReadKey().Key != ConsoleKey.Escape)
+            {
+                if (Console.ReadKey().Key == ConsoleKey.Escape)
+                {
+                    Environment.Exit(0);
+                }
+            }
         }
-        static void Welcome()
+
+        #region Name of the game and rules
+        static string Welcome()
         {
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine();
-            Console.WriteLine("                    Simple rules to follow:                      ");
-            Console.WriteLine();
-            Thread.Sleep(3000);
-            Console.Beep();
-            Console.WriteLine("1. You need to move the numbers and every time you move one,     ");
-            Console.WriteLine("   another number pops up in a random manner anywhere in the box.");
-            Console.WriteLine();
-            Thread.Sleep(3000);
-            Console.Beep();
-            Console.WriteLine("2. When two tiles with the same number on them collide           ");
-            Console.WriteLine("   they will merge into one tile that equals to their sum.       ");
-            Console.WriteLine();
-            Thread.Sleep(3000);
-            Console.Beep();
-            Console.WriteLine("3. Press ARROW keys to move the numbers!                         ");
-            Console.ResetColor();
-
-            Console.WriteLine();
-            PrintInYellow("              Press any key for the game to start:");
-            Console.ReadKey();
-
+            PrintInYellow("        Press ANY key to continue OR 'ENTER' to SKIP the rules:");
+            while (Console.ReadKey().Key != ConsoleKey.Enter)
+            {
+                Console.WriteLine();
+                PrintInBlack("                    Simple rules to follow:                      ");
+                Console.WriteLine();
+                Thread.Sleep(3000);
+                Console.Beep();
+                PrintInBlack("1. You need to move the numbers and every time you move one,     ");
+                PrintInBlack("   another number pops up in a random manner anywhere in the box.");
+                Console.WriteLine();
+                Thread.Sleep(3000);
+                Console.Beep();
+                PrintInBlack("2. When two tiles with the same number on them collide           ");
+                PrintInBlack("   they will merge into one tile that equals to their sum.       ");
+                Console.WriteLine();
+                Thread.Sleep(3000);
+                Console.Beep();
+                PrintInBlack("3. Press ARROW keys to move the numbers!                         ");
+                Console.WriteLine();
+                PrintInYellow("              Press any key for the game to start:");
+                Console.ReadKey();
+                return "";
+            }
+            return "";
         }
+        #endregion Name of the game and rules
+
+        //private static void Congratulations()
+        //{
+        //    Console.WriteLine("Congratulations! You won! ");
+        //}
+        //private static void InfoAboutGameIsOver(int score)
+        //{
+        //    Console.WriteLine($"GAME OVER! Thank you for playing! Your SCORE is {score}");
+        //}
+
+        #region Methods for printing colored text
         private static void PrintInRed(string text)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -103,13 +129,6 @@ namespace Day9_temp
             Console.WriteLine(text);
             Console.ResetColor();
         }
-        public string GameIsFinished(bool gameIsFinished)
-        {
-            if (!gameIsFinished)
-            {
-                Console.WriteLine("The game is in progress...");
-            }
-            return $"Congratulations! You won!";
-        }
+        #endregion Methods for printing colored text
     }
 }
