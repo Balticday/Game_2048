@@ -37,7 +37,7 @@ namespace Game_2048__KAN_version
                 PrintInBlack("3. Press ARROW keys to move the numbers!                         ");
                 Console.WriteLine();
 
-                PrintInYellow("              Press ANY key for the game to start:");             // to start the game a player can press ENTER
+                PrintInYellow("              Press ANY key for the game to start:");             // to start the game a player can press any key
                 Console.ReadKey(false);
             }
             #endregion Name of the game and rules
